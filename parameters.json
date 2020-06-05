@@ -1,0 +1,42 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "connections_plumsail_name": {
+            "value": null
+        },
+        "connections_azureblob_name": {
+            "value": null
+        },
+        "workflows_alebrelogicapp_name": {
+            "value": null
+        },
+        "connections_formrecognizer_name": {
+            "value": null
+        },
+        "connections_formrecognizer_1_name": {
+            "value": null
+        },
+        "connections_formrecognizer_2_name": {
+            "value": null
+        },
+        "connections_formrecognizer_3_name": {
+            "value": null
+        },
+        "accounts_alebrecustomvision_name": {
+            "value": null
+        },
+        "connections_cognitiveservicescustomvision_name": {
+            "value": null
+        },
+        "accounts_alebreformrecognizer_name": {
+            "value": null
+        },
+        "storageAccounts_alebrestorageaccountform_name": {
+            "value": null
+        },
+        "accounts_alebrecustomvision_Prediction_name": {
+            "value": null
+        }
+    }
+}

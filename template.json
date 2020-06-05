@@ -1,0 +1,1673 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "connections_plumsail_name": {
+            "defaultValue": "plumsail",
+            "type": "String"
+        },
+        "connections_azureblob_name": {
+            "defaultValue": "azureblob",
+            "type": "String"
+        },
+        "workflows_alebrelogicapp_name": {
+            "defaultValue": "alebrelogicapp",
+            "type": "String"
+        },
+        "connections_formrecognizer_name": {
+            "defaultValue": "formrecognizer",
+            "type": "String"
+        },
+        "connections_formrecognizer_1_name": {
+            "defaultValue": "formrecognizer-1",
+            "type": "String"
+        },
+        "connections_formrecognizer_2_name": {
+            "defaultValue": "formrecognizer-2",
+            "type": "String"
+        },
+        "connections_formrecognizer_3_name": {
+            "defaultValue": "formrecognizer-3",
+            "type": "String"
+        },
+        "accounts_alebrecustomvision_name": {
+            "defaultValue": "alebrecustomvision",
+            "type": "String"
+        },
+        "connections_cognitiveservicescustomvision_name": {
+            "defaultValue": "cognitiveservicescustomvision",
+            "type": "String"
+        },
+        "accounts_alebreformrecognizer_name": {
+            "defaultValue": "alebreformrecognizer",
+            "type": "String"
+        },
+        "storageAccounts_alebrestorageaccountform_name": {
+            "defaultValue": "alebrestorageaccountform",
+            "type": "String"
+        },
+        "accounts_alebrecustomvision_Prediction_name": {
+            "defaultValue": "alebrecustomvision-Prediction",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.CognitiveServices/accounts",
+            "apiVersion": "2017-04-18",
+            "name": "[parameters('accounts_alebrecustomvision_name')]",
+            "location": "eastus",
+            "sku": {
+                "name": "S0"
+            },
+            "kind": "CustomVision.Training",
+            "properties": {
+                "customSubDomainName": "[parameters('accounts_alebrecustomvision_name')]"
+            }
+        },
+        {
+            "type": "Microsoft.CognitiveServices/accounts",
+            "apiVersion": "2017-04-18",
+            "name": "[parameters('accounts_alebrecustomvision_Prediction_name')]",
+            "location": "eastus",
+            "sku": {
+                "name": "S0"
+            },
+            "kind": "CustomVision.Prediction",
+            "properties": {
+                "customSubDomainName": "alebrecustomvision-prediction"
+            }
+        },
+        {
+            "type": "Microsoft.CognitiveServices/accounts",
+            "apiVersion": "2017-04-18",
+            "name": "[parameters('accounts_alebreformrecognizer_name')]",
+            "location": "centralus",
+            "sku": {
+                "name": "S0"
+            },
+            "kind": "FormRecognizer",
+            "properties": {
+                "customSubDomainName": "[parameters('accounts_alebreformrecognizer_name')]"
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "2019-06-01",
+            "name": "[parameters('storageAccounts_alebrestorageaccountform_name')]",
+            "location": "centralus",
+            "sku": {
+                "name": "Standard_RAGRS",
+                "tier": "Standard"
+            },
+            "kind": "StorageV2",
+            "properties": {
+                "networkAcls": {
+                    "bypass": "AzureServices",
+                    "virtualNetworkRules": [],
+                    "ipRules": [],
+                    "defaultAction": "Allow"
+                },
+                "supportsHttpsTrafficOnly": true,
+                "encryption": {
+                    "services": {
+                        "file": {
+                            "keyType": "Account",
+                            "enabled": true
+                        },
+                        "blob": {
+                            "keyType": "Account",
+                            "enabled": true
+                        }
+                    },
+                    "keySource": "Microsoft.Storage"
+                },
+                "accessTier": "Hot"
+            }
+        },
+        {
+            "type": "Microsoft.Web/connections",
+            "apiVersion": "2016-06-01",
+            "name": "[parameters('connections_azureblob_name')]",
+            "location": "centralus",
+            "properties": {
+                "displayName": "New Invoice Added",
+                "customParameterValues": {},
+                "api": {
+                    "id": "[concat('/subscriptions/659cdcb2-415f-45d6-a43a-fdf5e5eda505/providers/Microsoft.Web/locations/centralus/managedApis/', parameters('connections_azureblob_name'))]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Web/connections",
+            "apiVersion": "2016-06-01",
+            "name": "[parameters('connections_cognitiveservicescustomvision_name')]",
+            "location": "centralus",
+            "properties": {
+                "displayName": "alebrecustomvisionima",
+                "customParameterValues": {},
+                "api": {
+                    "id": "[concat('/subscriptions/659cdcb2-415f-45d6-a43a-fdf5e5eda505/providers/Microsoft.Web/locations/centralus/managedApis/', parameters('connections_cognitiveservicescustomvision_name'))]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Web/connections",
+            "apiVersion": "2016-06-01",
+            "name": "[parameters('connections_formrecognizer_name')]",
+            "location": "centralus",
+            "properties": {
+                "displayName": "[concat('alebre', parameters('connections_formrecognizer_name'), 'logicapps')]",
+                "customParameterValues": {},
+                "api": {
+                    "id": "[concat('/subscriptions/659cdcb2-415f-45d6-a43a-fdf5e5eda505/providers/Microsoft.Web/locations/centralus/managedApis/', parameters('connections_formrecognizer_name'))]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Web/connections",
+            "apiVersion": "2016-06-01",
+            "name": "[parameters('connections_formrecognizer_1_name')]",
+            "location": "centralus",
+            "properties": {
+                "displayName": "Form Recognizer Connection",
+                "customParameterValues": {},
+                "api": {
+                    "id": "/subscriptions/659cdcb2-415f-45d6-a43a-fdf5e5eda505/providers/Microsoft.Web/locations/centralus/managedApis/formrecognizer"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Web/connections",
+            "apiVersion": "2016-06-01",
+            "name": "[parameters('connections_formrecognizer_2_name')]",
+            "location": "centralus",
+            "properties": {
+                "displayName": "Connection FR Test",
+                "customParameterValues": {},
+                "api": {
+                    "id": "/subscriptions/659cdcb2-415f-45d6-a43a-fdf5e5eda505/providers/Microsoft.Web/locations/centralus/managedApis/formrecognizer"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Web/connections",
+            "apiVersion": "2016-06-01",
+            "name": "[parameters('connections_formrecognizer_3_name')]",
+            "location": "centralus",
+            "properties": {
+                "displayName": "ConnectionIMAtest",
+                "customParameterValues": {},
+                "api": {
+                    "id": "/subscriptions/659cdcb2-415f-45d6-a43a-fdf5e5eda505/providers/Microsoft.Web/locations/centralus/managedApis/formrecognizer"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Web/connections",
+            "apiVersion": "2016-06-01",
+            "name": "[parameters('connections_plumsail_name')]",
+            "location": "centralus",
+            "properties": {
+                "displayName": "PDFtoIMAGE",
+                "customParameterValues": {},
+                "api": {
+                    "id": "[concat('/subscriptions/659cdcb2-415f-45d6-a43a-fdf5e5eda505/providers/Microsoft.Web/locations/centralus/managedApis/', parameters('connections_plumsail_name'))]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/blobServices",
+            "apiVersion": "2019-06-01",
+            "name": "[concat(parameters('storageAccounts_alebrestorageaccountform_name'), '/default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_alebrestorageaccountform_name'))]"
+            ],
+            "sku": {
+                "name": "Standard_RAGRS",
+                "tier": "Standard"
+            },
+            "properties": {
+                "cors": {
+                    "corsRules": [
+                        {
+                            "allowedOrigins": [
+                                "*"
+                            ],
+                            "allowedMethods": [
+                                "DELETE",
+                                "GET",
+                                "HEAD",
+                                "MERGE",
+                                "POST",
+                                "PUT",
+                                "PATCH",
+                                "OPTIONS"
+                            ],
+                            "maxAgeInSeconds": 200,
+                            "exposedHeaders": [
+                                "*"
+                            ],
+                            "allowedHeaders": [
+                                "*"
+                            ]
+                        }
+                    ]
+                },
+                "deleteRetentionPolicy": {
+                    "enabled": true,
+                    "days": 7
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/fileServices",
+            "apiVersion": "2019-06-01",
+            "name": "[concat(parameters('storageAccounts_alebrestorageaccountform_name'), '/default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_alebrestorageaccountform_name'))]"
+            ],
+            "sku": {
+                "name": "Standard_RAGRS",
+                "tier": "Standard"
+            },
+            "properties": {
+                "cors": {
+                    "corsRules": []
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
+            "apiVersion": "2019-06-01",
+            "name": "[concat(parameters('storageAccounts_alebrestorageaccountform_name'), '/default/azure-webjobs-hosts')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts/blobServices', parameters('storageAccounts_alebrestorageaccountform_name'), 'default')]",
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_alebrestorageaccountform_name'))]"
+            ],
+            "properties": {
+                "publicAccess": "None"
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
+            "apiVersion": "2019-06-01",
+            "name": "[concat(parameters('storageAccounts_alebrestorageaccountform_name'), '/default/azure-webjobs-secrets')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts/blobServices', parameters('storageAccounts_alebrestorageaccountform_name'), 'default')]",
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_alebrestorageaccountform_name'))]"
+            ],
+            "properties": {
+                "publicAccess": "None"
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
+            "apiVersion": "2019-06-01",
+            "name": "[concat(parameters('storageAccounts_alebrestorageaccountform_name'), '/default/docs')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts/blobServices', parameters('storageAccounts_alebrestorageaccountform_name'), 'default')]",
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_alebrestorageaccountform_name'))]"
+            ],
+            "properties": {
+                "publicAccess": "None"
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
+            "apiVersion": "2019-06-01",
+            "name": "[concat(parameters('storageAccounts_alebrestorageaccountform_name'), '/default/formblob')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts/blobServices', parameters('storageAccounts_alebrestorageaccountform_name'), 'default')]",
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_alebrestorageaccountform_name'))]"
+            ],
+            "properties": {
+                "publicAccess": "Blob"
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
+            "apiVersion": "2019-06-01",
+            "name": "[concat(parameters('storageAccounts_alebrestorageaccountform_name'), '/default/images')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts/blobServices', parameters('storageAccounts_alebrestorageaccountform_name'), 'default')]",
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_alebrestorageaccountform_name'))]"
+            ],
+            "properties": {
+                "publicAccess": "None"
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
+            "apiVersion": "2019-06-01",
+            "name": "[concat(parameters('storageAccounts_alebrestorageaccountform_name'), '/default/scm-releases')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts/blobServices', parameters('storageAccounts_alebrestorageaccountform_name'), 'default')]",
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_alebrestorageaccountform_name'))]"
+            ],
+            "properties": {
+                "publicAccess": "None"
+            }
+        },
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('workflows_alebrelogicapp_name')]",
+            "location": "centralus",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/connections', parameters('connections_azureblob_name'))]",
+                "[resourceId('Microsoft.Web/connections', parameters('connections_cognitiveservicescustomvision_name'))]",
+                "[resourceId('Microsoft.Web/connections', parameters('connections_plumsail_name'))]"
+            ],
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        },
+                        "FR API Key": {
+                            "defaultValue": "d3cb43bdd8cb42c6bca4ef5d7dae8694",
+                            "type": "String"
+                        }
+                    },
+                    "triggers": {
+                        "When_a_blob_is_added_or_modified_(properties_only)": {
+                            "recurrence": {
+                                "frequency": "Minute",
+                                "interval": 1
+                            },
+                            "splitOn": "@triggerBody()",
+                            "metadata": {
+                                "JTJmZm9ybWJsb2I=": "/formblob",
+                                "JTJmZm9ybWJsb2IlMmZMb2dpY0FwcHNUZXN0JTJm": "/formblob/LogicAppsTest/",
+                                "JTJmZm9ybWJsb2IlMmZMb2dpY0FwcHNUZXN0JTJmSW52b2ljZXNKUEVHJTJmSW52b2ljZXNVbnNvcnRlZCUyZg==": "/formblob/LogicAppsTest/InvoicesJPEG/InvoicesUnsorted/",
+                                "JTJmZm9ybWJsb2IlMmZMb2dpY0FwcHNUZXN0JTJmSW52b2ljZXNQREYlMmY=": "/formblob/LogicAppsTest/InvoicesPDF/"
+                            },
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['azureblob']['connectionId']"
+                                    }
+                                },
+                                "method": "get",
+                                "path": "/datasets/default/triggers/batch/onupdatedfile",
+                                "queries": {
+                                    "folderId": "JTJmZm9ybWJsb2IlMmZMb2dpY0FwcHNUZXN0JTJmSW52b2ljZXNQREYlMmY=",
+                                    "maxFileCount": 1
+                                }
+                            },
+                            "description": "When an invoice is added to the Unsorted Invoices folder. Note that this path will have to be changed when the \"PDF > JPEG\" conversion works."
+                        }
+                    },
+                    "actions": {
+                        "Convert_PDF_to_Image": {
+                            "runAfter": {
+                                "Get_blob_content_2": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "body": {
+                                    "documentContent": "@{base64(body('Get_blob_content_2'))}",
+                                    "dpi": 300,
+                                    "format": "Jpeg",
+                                    "pages": "1"
+                                },
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['plumsail']['connectionId']"
+                                    }
+                                },
+                                "method": "post",
+                                "path": "/flow/v1/Documents/jobs/Pdf2Image"
+                            }
+                        },
+                        "For_each": {
+                            "foreach": "@body('Convert_PDF_to_Image')?['resultFilesContents']",
+                            "actions": {
+                                "Condition": {
+                                    "actions": {
+                                        "ModelID_-_Update_Variable": {
+                                            "runAfter": {
+                                                "PSA_TAG": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "ModelId",
+                                                "value": "618d3ecd-06e3-4145-9c1c-433ed13d3165"
+                                            },
+                                            "description": "The template used on Form Recognizer is the one associated with the Invoices of the PSA template."
+                                        },
+                                        "PARSE_BODY_RESULTS_-_GET_Analyze_Form_Result_-_PSA": {
+                                            "runAfter": {
+                                                "Until": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ParseJson",
+                                            "inputs": {
+                                                "content": "@body('GET_Analyze_Form_Result_-_PSA')",
+                                                "schema": {
+                                                    "properties": {
+                                                        "body": {
+                                                            "properties": {
+                                                                "analyzeResult": {
+                                                                    "properties": {
+                                                                        "documentResults": {
+                                                                            "items": {
+                                                                                "properties": {
+                                                                                    "docType": {
+                                                                                        "type": "string"
+                                                                                    },
+                                                                                    "fields": {
+                                                                                        "properties": {
+                                                                                            "Car Brand": {
+                                                                                                "properties": {
+                                                                                                    "boundingBox": {
+                                                                                                        "items": {
+                                                                                                            "type": "integer"
+                                                                                                        },
+                                                                                                        "type": "array"
+                                                                                                    },
+                                                                                                    "confidence": {
+                                                                                                        "type": "integer"
+                                                                                                    },
+                                                                                                    "page": {
+                                                                                                        "type": "integer"
+                                                                                                    },
+                                                                                                    "text": {
+                                                                                                        "type": "string"
+                                                                                                    },
+                                                                                                    "type": {
+                                                                                                        "type": "string"
+                                                                                                    },
+                                                                                                    "valueString": {
+                                                                                                        "type": "string"
+                                                                                                    }
+                                                                                                },
+                                                                                                "type": "object"
+                                                                                            },
+                                                                                            "Car Model": {
+                                                                                                "properties": {
+                                                                                                    "boundingBox": {
+                                                                                                        "items": {
+                                                                                                            "type": "integer"
+                                                                                                        },
+                                                                                                        "type": "array"
+                                                                                                    },
+                                                                                                    "confidence": {
+                                                                                                        "type": "number"
+                                                                                                    },
+                                                                                                    "page": {
+                                                                                                        "type": "integer"
+                                                                                                    },
+                                                                                                    "text": {
+                                                                                                        "type": "string"
+                                                                                                    },
+                                                                                                    "type": {
+                                                                                                        "type": "string"
+                                                                                                    },
+                                                                                                    "valueString": {
+                                                                                                        "type": "string"
+                                                                                                    }
+                                                                                                },
+                                                                                                "type": "object"
+                                                                                            },
+                                                                                            "Car Parts": {
+                                                                                                "properties": {
+                                                                                                    "boundingBox": {
+                                                                                                        "items": {
+                                                                                                            "type": "integer"
+                                                                                                        },
+                                                                                                        "type": "array"
+                                                                                                    },
+                                                                                                    "confidence": {
+                                                                                                        "type": "number"
+                                                                                                    },
+                                                                                                    "page": {
+                                                                                                        "type": "integer"
+                                                                                                    },
+                                                                                                    "text": {
+                                                                                                        "type": "string"
+                                                                                                    },
+                                                                                                    "type": {
+                                                                                                        "type": "string"
+                                                                                                    },
+                                                                                                    "valueString": {
+                                                                                                        "type": "string"
+                                                                                                    }
+                                                                                                },
+                                                                                                "type": "object"
+                                                                                            },
+                                                                                            "Km Reading": {
+                                                                                                "properties": {
+                                                                                                    "boundingBox": {
+                                                                                                        "items": {
+                                                                                                            "type": "integer"
+                                                                                                        },
+                                                                                                        "type": "array"
+                                                                                                    },
+                                                                                                    "confidence": {
+                                                                                                        "type": "number"
+                                                                                                    },
+                                                                                                    "page": {
+                                                                                                        "type": "integer"
+                                                                                                    },
+                                                                                                    "text": {
+                                                                                                        "type": "string"
+                                                                                                    },
+                                                                                                    "type": {
+                                                                                                        "type": "string"
+                                                                                                    },
+                                                                                                    "valueString": {
+                                                                                                        "type": "string"
+                                                                                                    }
+                                                                                                },
+                                                                                                "type": "object"
+                                                                                            },
+                                                                                            "TTC": {
+                                                                                                "properties": {
+                                                                                                    "boundingBox": {
+                                                                                                        "items": {
+                                                                                                            "type": "integer"
+                                                                                                        },
+                                                                                                        "type": "array"
+                                                                                                    },
+                                                                                                    "confidence": {
+                                                                                                        "type": "integer"
+                                                                                                    },
+                                                                                                    "page": {
+                                                                                                        "type": "integer"
+                                                                                                    },
+                                                                                                    "text": {
+                                                                                                        "type": "string"
+                                                                                                    },
+                                                                                                    "type": {
+                                                                                                        "type": "string"
+                                                                                                    },
+                                                                                                    "valueString": {
+                                                                                                        "type": "string"
+                                                                                                    }
+                                                                                                },
+                                                                                                "type": "object"
+                                                                                            }
+                                                                                        },
+                                                                                        "type": "object"
+                                                                                    },
+                                                                                    "pageRange": {
+                                                                                        "items": {
+                                                                                            "type": "integer"
+                                                                                        },
+                                                                                        "type": "array"
+                                                                                    }
+                                                                                },
+                                                                                "required": [
+                                                                                    "docType",
+                                                                                    "pageRange",
+                                                                                    "fields"
+                                                                                ],
+                                                                                "type": "object"
+                                                                            },
+                                                                            "type": "array"
+                                                                        },
+                                                                        "errors": {
+                                                                            "type": "array"
+                                                                        },
+                                                                        "pageResults": {
+                                                                            "items": {
+                                                                                "properties": {
+                                                                                    "page": {
+                                                                                        "type": "integer"
+                                                                                    },
+                                                                                    "tables": {
+                                                                                        "items": {
+                                                                                            "properties": {
+                                                                                                "cells": {
+                                                                                                    "items": {
+                                                                                                        "properties": {
+                                                                                                            "boundingBox": {
+                                                                                                                "items": {
+                                                                                                                    "type": "integer"
+                                                                                                                },
+                                                                                                                "type": "array"
+                                                                                                            },
+                                                                                                            "columnIndex": {
+                                                                                                                "type": "integer"
+                                                                                                            },
+                                                                                                            "columnSpan": {
+                                                                                                                "type": "integer"
+                                                                                                            },
+                                                                                                            "rowIndex": {
+                                                                                                                "type": "integer"
+                                                                                                            },
+                                                                                                            "rowSpan": {
+                                                                                                                "type": "integer"
+                                                                                                            },
+                                                                                                            "text": {
+                                                                                                                "type": "string"
+                                                                                                            }
+                                                                                                        },
+                                                                                                        "required": [
+                                                                                                            "rowIndex",
+                                                                                                            "columnIndex",
+                                                                                                            "text",
+                                                                                                            "boundingBox"
+                                                                                                        ],
+                                                                                                        "type": "object"
+                                                                                                    },
+                                                                                                    "type": "array"
+                                                                                                },
+                                                                                                "columns": {
+                                                                                                    "type": "integer"
+                                                                                                },
+                                                                                                "rows": {
+                                                                                                    "type": "integer"
+                                                                                                }
+                                                                                            },
+                                                                                            "required": [
+                                                                                                "rows",
+                                                                                                "columns",
+                                                                                                "cells"
+                                                                                            ],
+                                                                                            "type": "object"
+                                                                                        },
+                                                                                        "type": "array"
+                                                                                    }
+                                                                                },
+                                                                                "required": [
+                                                                                    "page",
+                                                                                    "tables"
+                                                                                ],
+                                                                                "type": "object"
+                                                                            },
+                                                                            "type": "array"
+                                                                        },
+                                                                        "readResults": {
+                                                                            "items": {
+                                                                                "properties": {
+                                                                                    "angle": {
+                                                                                        "type": "integer"
+                                                                                    },
+                                                                                    "height": {
+                                                                                        "type": "integer"
+                                                                                    },
+                                                                                    "language": {
+                                                                                        "type": "string"
+                                                                                    },
+                                                                                    "page": {
+                                                                                        "type": "integer"
+                                                                                    },
+                                                                                    "unit": {
+                                                                                        "type": "string"
+                                                                                    },
+                                                                                    "width": {
+                                                                                        "type": "integer"
+                                                                                    }
+                                                                                },
+                                                                                "required": [
+                                                                                    "page",
+                                                                                    "language",
+                                                                                    "angle",
+                                                                                    "width",
+                                                                                    "height",
+                                                                                    "unit"
+                                                                                ],
+                                                                                "type": "object"
+                                                                            },
+                                                                            "type": "array"
+                                                                        },
+                                                                        "version": {
+                                                                            "type": "string"
+                                                                        }
+                                                                    },
+                                                                    "type": "object"
+                                                                },
+                                                                "createdDateTime": {
+                                                                    "type": "string"
+                                                                },
+                                                                "lastUpdatedDateTime": {
+                                                                    "type": "string"
+                                                                },
+                                                                "status": {
+                                                                    "type": "string"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            }
+                                        },
+                                        "PARSE_HEADER_-_POST_Analyze_Form_-_PSA": {
+                                            "runAfter": {
+                                                "POST_Analyze_Form_-_PSA": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ParseJson",
+                                            "inputs": {
+                                                "content": "@outputs('POST_Analyze_Form_-_PSA')['headers']",
+                                                "schema": {
+                                                    "properties": {
+                                                        "Content-Length": {
+                                                            "type": "string"
+                                                        },
+                                                        "Date": {
+                                                            "type": "string"
+                                                        },
+                                                        "Operation-Location": {
+                                                            "type": "string"
+                                                        },
+                                                        "Strict-Transport-Security": {
+                                                            "type": "string"
+                                                        },
+                                                        "apim-request-id": {
+                                                            "type": "string"
+                                                        },
+                                                        "x-content-type-options": {
+                                                            "type": "string"
+                                                        },
+                                                        "x-envoy-upstream-service-time": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            }
+                                        },
+                                        "POST_Analyze_Form_-_PSA": {
+                                            "runAfter": {
+                                                "ModelID_-_Update_Variable": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "Http",
+                                            "inputs": {
+                                                "body": "@body('Get_blob_content_2')",
+                                                "headers": {
+                                                    "Content-Type": "image/jpeg",
+                                                    "Ocp-Apim-Subscription-Key": "@parameters('FR API Key')"
+                                                },
+                                                "method": "POST",
+                                                "queries": {
+                                                    "modelId": "@variables('ModelId')"
+                                                },
+                                                "uri": "https://alebreformrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0-preview/custom/models/@{variables('ModelId')}/analyze"
+                                            }
+                                        },
+                                        "PSA_TAG": {
+                                            "runAfter": {},
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": "@body('Get_blob_content_2')",
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['azureblob']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/datasets/default/files",
+                                                "queries": {
+                                                    "folderPath": "/formblob/LogicAppsTest/InvoicesJPEG/InvoicesSorted/InvoicesPSA/",
+                                                    "name": "PSA-@{triggerBody()?['Name']}",
+                                                    "queryParametersSingleEncoded": true
+                                                }
+                                            },
+                                            "description": "Copy of the invoice to the PSA folder",
+                                            "runtimeConfiguration": {
+                                                "contentTransfer": {
+                                                    "transferMode": "Chunked"
+                                                }
+                                            }
+                                        },
+                                        "ResultId_-_Update_Variable": {
+                                            "runAfter": {
+                                                "PARSE_HEADER_-_POST_Analyze_Form_-_PSA": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "ResultId",
+                                                "value": "@{replace(substring(body('PARSE_HEADER_-_POST_Analyze_Form_-_PSA')?['Operation-Location'],lastIndexOf(body('PARSE_HEADER_-_POST_Analyze_Form_-_PSA')?['Operation-Location'],'/')),'/','')}"
+                                            },
+                                            "description": "We need to isolate the result id"
+                                        },
+                                        "Until": {
+                                            "actions": {
+                                                "GET_Analyze_Form_Result_-_PSA": {
+                                                    "runAfter": {},
+                                                    "type": "Http",
+                                                    "inputs": {
+                                                        "cookie": "HTTP/1.1",
+                                                        "headers": {
+                                                            "Ocp-Apim-Subscription-Key": "@parameters('FR API Key')"
+                                                        },
+                                                        "method": "GET",
+                                                        "queries": {
+                                                            "modelId": "@variables('ModelId')",
+                                                            "resultId": "@variables('ResultId')"
+                                                        },
+                                                        "uri": "https://alebreformrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0-preview/custom/models/@{variables('ModelId')}/analyzeResults/@{variables('ResultId')}"
+                                                    }
+                                                },
+                                                "PARSE_BODY_-_GET_Analyze_Form_Result_-_PSA": {
+                                                    "runAfter": {
+                                                        "GET_Analyze_Form_Result_-_PSA": [
+                                                            "Succeeded"
+                                                        ]
+                                                    },
+                                                    "type": "ParseJson",
+                                                    "inputs": {
+                                                        "content": "@body('GET_Analyze_Form_Result_-_PSA')",
+                                                        "schema": {
+                                                            "properties": {
+                                                                "createdDateTime": {
+                                                                    "type": "string"
+                                                                },
+                                                                "lastUpdatedDateTime": {
+                                                                    "type": "string"
+                                                                },
+                                                                "status": {
+                                                                    "type": "string"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    }
+                                                },
+                                                "Update_statuts_-_PSA": {
+                                                    "runAfter": {
+                                                        "PARSE_BODY_-_GET_Analyze_Form_Result_-_PSA": [
+                                                            "Succeeded"
+                                                        ]
+                                                    },
+                                                    "type": "SetVariable",
+                                                    "inputs": {
+                                                        "name": "status",
+                                                        "value": "@body('PARSE_BODY_-_GET_Analyze_Form_Result_-_PSA')?['status']"
+                                                    }
+                                                }
+                                            },
+                                            "runAfter": {
+                                                "ResultId_-_Update_Variable": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "expression": "@equals(variables('status'), 'succeeded')",
+                                            "limit": {
+                                                "count": 100,
+                                                "timeout": "PT1H"
+                                            },
+                                            "type": "Until",
+                                            "description": "When the API is called via the HTTP request, it directly returns the response \"200\", Logic Apps by the idea that we can move on to the next action. But the status is \"notStarted\" and not \"failed\" or \"succeeded\". So you have to loop"
+                                        }
+                                    },
+                                    "runAfter": {},
+                                    "else": {
+                                        "actions": {
+                                            "Condition_2": {
+                                                "actions": {
+                                                    "CITROEN_TAG": {
+                                                        "runAfter": {},
+                                                        "type": "ApiConnection",
+                                                        "inputs": {
+                                                            "body": "@body('Get_blob_content_2')",
+                                                            "host": {
+                                                                "connection": {
+                                                                    "name": "@parameters('$connections')['azureblob']['connectionId']"
+                                                                }
+                                                            },
+                                                            "method": "post",
+                                                            "path": "/datasets/default/files",
+                                                            "queries": {
+                                                                "folderPath": "/formblob/LogicAppsTest/InvoicesJPEG/InvoicesSorted/InvoicesCitroen/",
+                                                                "name": "Citroen-@{triggerBody()?['Name']}",
+                                                                "queryParametersSingleEncoded": true
+                                                            }
+                                                        },
+                                                        "description": "Copy of the invoice to the Citroen folder",
+                                                        "runtimeConfiguration": {
+                                                            "contentTransfer": {
+                                                                "transferMode": "Chunked"
+                                                            }
+                                                        }
+                                                    },
+                                                    "ModelID_-_Update_Variable_-_Citroen": {
+                                                        "runAfter": {
+                                                            "CITROEN_TAG": [
+                                                                "Succeeded"
+                                                            ]
+                                                        },
+                                                        "type": "SetVariable",
+                                                        "inputs": {
+                                                            "name": "ModelId",
+                                                            "value": "e0934da2-6af2-47cd-9c9d-b3e13aa3c029"
+                                                        },
+                                                        "description": "The template used on Form Recognizer is the one associated with the Invoices of the Citroen template."
+                                                    },
+                                                    "PARSE_BODY_RESULTS_-_GET_Analyze_Form_Result_-_Citroen": {
+                                                        "runAfter": {
+                                                            "Until_2": [
+                                                                "Succeeded"
+                                                            ]
+                                                        },
+                                                        "type": "ParseJson",
+                                                        "inputs": {
+                                                            "content": "@body('GET_Analyze_Form_Result_-_Citroen')",
+                                                            "schema": {
+                                                                "properties": {
+                                                                    "body": {
+                                                                        "properties": {
+                                                                            "analyzeResult": {
+                                                                                "properties": {
+                                                                                    "documentResults": {
+                                                                                        "items": {
+                                                                                            "properties": {
+                                                                                                "docType": {
+                                                                                                    "type": "string"
+                                                                                                },
+                                                                                                "fields": {
+                                                                                                    "properties": {
+                                                                                                        "Car Brand": {
+                                                                                                            "properties": {
+                                                                                                                "boundingBox": {
+                                                                                                                    "items": {
+                                                                                                                        "type": "integer"
+                                                                                                                    },
+                                                                                                                    "type": "array"
+                                                                                                                },
+                                                                                                                "confidence": {
+                                                                                                                    "type": "integer"
+                                                                                                                },
+                                                                                                                "page": {
+                                                                                                                    "type": "integer"
+                                                                                                                },
+                                                                                                                "text": {
+                                                                                                                    "type": "string"
+                                                                                                                },
+                                                                                                                "type": {
+                                                                                                                    "type": "string"
+                                                                                                                },
+                                                                                                                "valueString": {
+                                                                                                                    "type": "string"
+                                                                                                                }
+                                                                                                            },
+                                                                                                            "type": "object"
+                                                                                                        },
+                                                                                                        "Car Model": {
+                                                                                                            "properties": {
+                                                                                                                "boundingBox": {
+                                                                                                                    "items": {
+                                                                                                                        "type": "integer"
+                                                                                                                    },
+                                                                                                                    "type": "array"
+                                                                                                                },
+                                                                                                                "confidence": {
+                                                                                                                    "type": "number"
+                                                                                                                },
+                                                                                                                "page": {
+                                                                                                                    "type": "integer"
+                                                                                                                },
+                                                                                                                "text": {
+                                                                                                                    "type": "string"
+                                                                                                                },
+                                                                                                                "type": {
+                                                                                                                    "type": "string"
+                                                                                                                },
+                                                                                                                "valueString": {
+                                                                                                                    "type": "string"
+                                                                                                                }
+                                                                                                            },
+                                                                                                            "type": "object"
+                                                                                                        },
+                                                                                                        "Car Parts": {
+                                                                                                            "properties": {
+                                                                                                                "boundingBox": {
+                                                                                                                    "items": {
+                                                                                                                        "type": "integer"
+                                                                                                                    },
+                                                                                                                    "type": "array"
+                                                                                                                },
+                                                                                                                "confidence": {
+                                                                                                                    "type": "number"
+                                                                                                                },
+                                                                                                                "page": {
+                                                                                                                    "type": "integer"
+                                                                                                                },
+                                                                                                                "text": {
+                                                                                                                    "type": "string"
+                                                                                                                },
+                                                                                                                "type": {
+                                                                                                                    "type": "string"
+                                                                                                                },
+                                                                                                                "valueString": {
+                                                                                                                    "type": "string"
+                                                                                                                }
+                                                                                                            },
+                                                                                                            "type": "object"
+                                                                                                        },
+                                                                                                        "Km Reading": {
+                                                                                                            "properties": {
+                                                                                                                "boundingBox": {
+                                                                                                                    "items": {
+                                                                                                                        "type": "integer"
+                                                                                                                    },
+                                                                                                                    "type": "array"
+                                                                                                                },
+                                                                                                                "confidence": {
+                                                                                                                    "type": "number"
+                                                                                                                },
+                                                                                                                "page": {
+                                                                                                                    "type": "integer"
+                                                                                                                },
+                                                                                                                "text": {
+                                                                                                                    "type": "string"
+                                                                                                                },
+                                                                                                                "type": {
+                                                                                                                    "type": "string"
+                                                                                                                },
+                                                                                                                "valueString": {
+                                                                                                                    "type": "string"
+                                                                                                                }
+                                                                                                            },
+                                                                                                            "type": "object"
+                                                                                                        },
+                                                                                                        "TTC": {
+                                                                                                            "properties": {
+                                                                                                                "boundingBox": {
+                                                                                                                    "items": {
+                                                                                                                        "type": "integer"
+                                                                                                                    },
+                                                                                                                    "type": "array"
+                                                                                                                },
+                                                                                                                "confidence": {
+                                                                                                                    "type": "integer"
+                                                                                                                },
+                                                                                                                "page": {
+                                                                                                                    "type": "integer"
+                                                                                                                },
+                                                                                                                "text": {
+                                                                                                                    "type": "string"
+                                                                                                                },
+                                                                                                                "type": {
+                                                                                                                    "type": "string"
+                                                                                                                },
+                                                                                                                "valueString": {
+                                                                                                                    "type": "string"
+                                                                                                                }
+                                                                                                            },
+                                                                                                            "type": "object"
+                                                                                                        }
+                                                                                                    },
+                                                                                                    "type": "object"
+                                                                                                },
+                                                                                                "pageRange": {
+                                                                                                    "items": {
+                                                                                                        "type": "integer"
+                                                                                                    },
+                                                                                                    "type": "array"
+                                                                                                }
+                                                                                            },
+                                                                                            "required": [
+                                                                                                "docType",
+                                                                                                "pageRange",
+                                                                                                "fields"
+                                                                                            ],
+                                                                                            "type": "object"
+                                                                                        },
+                                                                                        "type": "array"
+                                                                                    },
+                                                                                    "errors": {
+                                                                                        "type": "array"
+                                                                                    },
+                                                                                    "pageResults": {
+                                                                                        "items": {
+                                                                                            "properties": {
+                                                                                                "page": {
+                                                                                                    "type": "integer"
+                                                                                                },
+                                                                                                "tables": {
+                                                                                                    "items": {
+                                                                                                        "properties": {
+                                                                                                            "cells": {
+                                                                                                                "items": {
+                                                                                                                    "properties": {
+                                                                                                                        "boundingBox": {
+                                                                                                                            "items": {
+                                                                                                                                "type": "integer"
+                                                                                                                            },
+                                                                                                                            "type": "array"
+                                                                                                                        },
+                                                                                                                        "columnIndex": {
+                                                                                                                            "type": "integer"
+                                                                                                                        },
+                                                                                                                        "columnSpan": {
+                                                                                                                            "type": "integer"
+                                                                                                                        },
+                                                                                                                        "rowIndex": {
+                                                                                                                            "type": "integer"
+                                                                                                                        },
+                                                                                                                        "rowSpan": {
+                                                                                                                            "type": "integer"
+                                                                                                                        },
+                                                                                                                        "text": {
+                                                                                                                            "type": "string"
+                                                                                                                        }
+                                                                                                                    },
+                                                                                                                    "required": [
+                                                                                                                        "rowIndex",
+                                                                                                                        "columnIndex",
+                                                                                                                        "text",
+                                                                                                                        "boundingBox"
+                                                                                                                    ],
+                                                                                                                    "type": "object"
+                                                                                                                },
+                                                                                                                "type": "array"
+                                                                                                            },
+                                                                                                            "columns": {
+                                                                                                                "type": "integer"
+                                                                                                            },
+                                                                                                            "rows": {
+                                                                                                                "type": "integer"
+                                                                                                            }
+                                                                                                        },
+                                                                                                        "required": [
+                                                                                                            "rows",
+                                                                                                            "columns",
+                                                                                                            "cells"
+                                                                                                        ],
+                                                                                                        "type": "object"
+                                                                                                    },
+                                                                                                    "type": "array"
+                                                                                                }
+                                                                                            },
+                                                                                            "required": [
+                                                                                                "page",
+                                                                                                "tables"
+                                                                                            ],
+                                                                                            "type": "object"
+                                                                                        },
+                                                                                        "type": "array"
+                                                                                    },
+                                                                                    "readResults": {
+                                                                                        "items": {
+                                                                                            "properties": {
+                                                                                                "angle": {
+                                                                                                    "type": "integer"
+                                                                                                },
+                                                                                                "height": {
+                                                                                                    "type": "integer"
+                                                                                                },
+                                                                                                "language": {
+                                                                                                    "type": "string"
+                                                                                                },
+                                                                                                "page": {
+                                                                                                    "type": "integer"
+                                                                                                },
+                                                                                                "unit": {
+                                                                                                    "type": "string"
+                                                                                                },
+                                                                                                "width": {
+                                                                                                    "type": "integer"
+                                                                                                }
+                                                                                            },
+                                                                                            "required": [
+                                                                                                "page",
+                                                                                                "language",
+                                                                                                "angle",
+                                                                                                "width",
+                                                                                                "height",
+                                                                                                "unit"
+                                                                                            ],
+                                                                                            "type": "object"
+                                                                                        },
+                                                                                        "type": "array"
+                                                                                    },
+                                                                                    "version": {
+                                                                                        "type": "string"
+                                                                                    }
+                                                                                },
+                                                                                "type": "object"
+                                                                            },
+                                                                            "createdDateTime": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "lastUpdatedDateTime": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "status": {
+                                                                                "type": "string"
+                                                                            }
+                                                                        },
+                                                                        "type": "object"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            }
+                                                        }
+                                                    },
+                                                    "PARSE_HEADER_-_POST_Analyze_Form_-_Citroen": {
+                                                        "runAfter": {
+                                                            "POST_Analyze_Form_-_Citroen": [
+                                                                "Succeeded"
+                                                            ]
+                                                        },
+                                                        "type": "ParseJson",
+                                                        "inputs": {
+                                                            "content": "@outputs('POST_Analyze_Form_-_Citroen')['headers']",
+                                                            "schema": {
+                                                                "properties": {
+                                                                    "Content-Length": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "Date": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "Operation-Location": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "Strict-Transport-Security": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "apim-request-id": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "x-content-type-options": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "x-envoy-upstream-service-time": {
+                                                                        "type": "string"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            }
+                                                        }
+                                                    },
+                                                    "POST_Analyze_Form_-_Citroen": {
+                                                        "runAfter": {
+                                                            "ModelID_-_Update_Variable_-_Citroen": [
+                                                                "Succeeded"
+                                                            ]
+                                                        },
+                                                        "type": "Http",
+                                                        "inputs": {
+                                                            "body": "@body('Get_blob_content_2')",
+                                                            "headers": {
+                                                                "Content-Type": "image/jpeg",
+                                                                "Ocp-Apim-Subscription-Key": "@parameters('FR API Key')"
+                                                            },
+                                                            "method": "POST",
+                                                            "queries": {
+                                                                "modelId": "@variables('ModelId')"
+                                                            },
+                                                            "uri": "https://alebreformrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0-preview/custom/models/@{variables('ModelId')}/analyze"
+                                                        }
+                                                    },
+                                                    "ResultId_-_Update_Variable_-_Citroen": {
+                                                        "runAfter": {
+                                                            "PARSE_HEADER_-_POST_Analyze_Form_-_Citroen": [
+                                                                "Succeeded"
+                                                            ]
+                                                        },
+                                                        "type": "SetVariable",
+                                                        "inputs": {
+                                                            "name": "ResultId",
+                                                            "value": "@{replace(substring(body('PARSE_HEADER_-_POST_Analyze_Form_-_Citroen')?['Operation-Location'],lastIndexOf(body('PARSE_HEADER_-_POST_Analyze_Form_-_Citroen')?['Operation-Location'],'/')),'/','')}"
+                                                        }
+                                                    },
+                                                    "Until_2": {
+                                                        "actions": {
+                                                            "GET_Analyze_Form_Result_-_Citroen": {
+                                                                "runAfter": {},
+                                                                "type": "Http",
+                                                                "inputs": {
+                                                                    "cookie": "HTTP/1.1",
+                                                                    "headers": {
+                                                                        "Ocp-Apim-Subscription-Key": "@parameters('FR API Key')"
+                                                                    },
+                                                                    "method": "GET",
+                                                                    "queries": {
+                                                                        "modelId": "@variables('ModelId')",
+                                                                        "resultId": "@variables('ResultId')"
+                                                                    },
+                                                                    "uri": "https://alebreformrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0-preview/custom/models/@{variables('ModelId')}/analyzeResults/@{variables('ResultId')}"
+                                                                }
+                                                            },
+                                                            "Parse_JSON": {
+                                                                "runAfter": {
+                                                                    "GET_Analyze_Form_Result_-_Citroen": [
+                                                                        "Succeeded"
+                                                                    ]
+                                                                },
+                                                                "type": "ParseJson",
+                                                                "inputs": {
+                                                                    "content": "@body('GET_Analyze_Form_Result_-_Citroen')",
+                                                                    "schema": {
+                                                                        "properties": {
+                                                                            "createdDateTime": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "lastUpdatedDateTime": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "status": {
+                                                                                "type": "string"
+                                                                            }
+                                                                        },
+                                                                        "type": "object"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "Set_variable": {
+                                                                "runAfter": {
+                                                                    "Parse_JSON": [
+                                                                        "Succeeded"
+                                                                    ]
+                                                                },
+                                                                "type": "SetVariable",
+                                                                "inputs": {
+                                                                    "name": "status",
+                                                                    "value": "@body('Parse_JSON')?['status']"
+                                                                }
+                                                            }
+                                                        },
+                                                        "runAfter": {
+                                                            "ResultId_-_Update_Variable_-_Citroen": [
+                                                                "Succeeded"
+                                                            ]
+                                                        },
+                                                        "expression": "@equals(variables('status'), 'succeeded')",
+                                                        "limit": {
+                                                            "count": 100,
+                                                            "timeout": "PT1H"
+                                                        },
+                                                        "type": "Until",
+                                                        "description": "When the API is called via the HTTP request, it directly returns the response \"200\", Logic Apps by the idea that we can move on to the next action. But the status is \"notStarted\" and not \"failed\" or \"succeeded\". So you have to loop"
+                                                    }
+                                                },
+                                                "runAfter": {},
+                                                "expression": {
+                                                    "and": [
+                                                        {
+                                                            "greater": [
+                                                                "@variables('citroenPrediction')",
+                                                                0.5
+                                                            ]
+                                                        }
+                                                    ]
+                                                },
+                                                "type": "If"
+                                            }
+                                        }
+                                    },
+                                    "expression": {
+                                        "and": [
+                                            {
+                                                "greater": [
+                                                    "@variables('psaPrediction')",
+                                                    0.5
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    "type": "If"
+                                }
+                            },
+                            "runAfter": {
+                                "Initialize_variable_-_Statuts_-_Analyze_Form": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Foreach",
+                            "description": "Check the results provided by Custom Vision"
+                        },
+                        "For_each_2": {
+                            "foreach": "@body('Convert_PDF_to_Image')?['resultFilesContents']",
+                            "actions": {
+                                "Classify_an_image_(V2)": {
+                                    "runAfter": {},
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": "@base64ToBinary(items('For_each_2'))",
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['cognitiveservicescustomvision']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/v2/customvision/v3.0/Prediction/@{encodeURIComponent('d0cc37f5-6c11-4048-ad43-9c72a86fb851')}/classify/iterations/@{encodeURIComponent('imacustomvisiontest')}/image"
+                                    },
+                                    "description": "Custom Vision: Which pattern does this invoice belong to? "
+                                },
+                                "For_each_4": {
+                                    "foreach": "@body('Classify_an_image_(V2)')?['predictions']",
+                                    "actions": {
+                                        "Condition_3": {
+                                            "actions": {
+                                                "Set_variable_-_PSA_Prediction": {
+                                                    "runAfter": {},
+                                                    "type": "SetVariable",
+                                                    "inputs": {
+                                                        "name": "psaPrediction",
+                                                        "value": "@items('For_each_4')?['probability']"
+                                                    }
+                                                }
+                                            },
+                                            "runAfter": {},
+                                            "else": {
+                                                "actions": {
+                                                    "Set_variable_-_Citroen_Prediction": {
+                                                        "runAfter": {},
+                                                        "type": "SetVariable",
+                                                        "inputs": {
+                                                            "name": "citroenPrediction",
+                                                            "value": "@items('For_each_4')?['probability']"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "expression": {
+                                                "and": [
+                                                    {
+                                                        "equals": [
+                                                            "@items('For_each_4')?['tagName']",
+                                                            "PSA"
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            "type": "If"
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Classify_an_image_(V2)": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Foreach",
+                                    "description": "Update Prediction Variables"
+                                }
+                            },
+                            "runAfter": {
+                                "Initialize_variable_-_Citroen_Prediction": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Foreach",
+                            "description": "Custom Vision"
+                        },
+                        "For_each_3": {
+                            "foreach": "@body('Convert_PDF_to_Image')?['resultFilesContents']",
+                            "actions": {
+                                "Create_blob": {
+                                    "runAfter": {},
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": "@base64ToBinary(items('For_each_3'))",
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azureblob']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/default/files",
+                                        "queries": {
+                                            "folderPath": "/formblob/LogicAppsTest/InvoicesJPEG/InvoicesUnsorted/",
+                                            "name": "@{triggerBody()?['Name']}.jpg",
+                                            "queryParametersSingleEncoded": true
+                                        }
+                                    },
+                                    "runtimeConfiguration": {
+                                        "contentTransfer": {
+                                            "transferMode": "Chunked"
+                                        }
+                                    }
+                                }
+                            },
+                            "runAfter": {
+                                "Convert_PDF_to_Image": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Foreach",
+                            "description": "La conversion est faite en JPG, maintenant il faut faire en sorte de le déplacer vers le bon dossier : les factures non triées"
+                        },
+                        "Get_blob_content_2": {
+                            "runAfter": {},
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['azureblob']['connectionId']"
+                                    }
+                                },
+                                "method": "get",
+                                "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent(triggerBody()?['FileLocator']))}/content",
+                                "queries": {
+                                    "inferContentType": true
+                                }
+                            },
+                            "description": "Retrieve the last invoice added."
+                        },
+                        "Initialize_variable_-_Citroen_Prediction": {
+                            "runAfter": {
+                                "Initialize_variable_-_PSA_Prediction": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "citroenPrediction",
+                                        "type": "float"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_-_ModelId_-_Analyze_Form": {
+                            "runAfter": {
+                                "Initialize_variable_-_ResultId_-_Analyze_Form": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "ModelId",
+                                        "type": "string"
+                                    }
+                                ]
+                            },
+                            "description": "Model ID we will use for Form Recognizer - 1 model id = 1 invoice's pattern"
+                        },
+                        "Initialize_variable_-_PSA_Prediction": {
+                            "runAfter": {
+                                "For_each_3": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "psaPrediction",
+                                        "type": "float"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_-_ResultId_-_Analyze_Form": {
+                            "runAfter": {
+                                "For_each_2": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "ResultId",
+                                        "type": "string"
+                                    }
+                                ]
+                            },
+                            "description": "This variable is used when the Form Recognizer service is called."
+                        },
+                        "Initialize_variable_-_Statuts_-_Analyze_Form": {
+                            "runAfter": {
+                                "Initialize_variable_-_ModelId_-_Analyze_Form": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "status",
+                                        "type": "string"
+                                    }
+                                ]
+                            },
+                            "description": "Important variable for the status of the GET Analyze Form Results API call for Form Recognizer."
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "azureblob": {
+                                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('connections_azureblob_name'))]",
+                                "connectionName": "azureblob",
+                                "id": "/subscriptions/659cdcb2-415f-45d6-a43a-fdf5e5eda505/providers/Microsoft.Web/locations/centralus/managedApis/azureblob"
+                            },
+                            "cognitiveservicescustomvision": {
+                                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('connections_cognitiveservicescustomvision_name'))]",
+                                "connectionName": "cognitiveservicescustomvision",
+                                "id": "/subscriptions/659cdcb2-415f-45d6-a43a-fdf5e5eda505/providers/Microsoft.Web/locations/centralus/managedApis/cognitiveservicescustomvision"
+                            },
+                            "plumsail": {
+                                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('connections_plumsail_name'))]",
+                                "connectionName": "plumsail",
+                                "id": "/subscriptions/659cdcb2-415f-45d6-a43a-fdf5e5eda505/providers/Microsoft.Web/locations/centralus/managedApis/plumsail"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}
