@@ -1,4 +1,4 @@
-# CustomVisionFormRecognizerProject
+# Form Recognizer & Custom Vision Project
 
 ## Presentation of the Azure Cognitives Services
 
