@@ -1,14 +1,15 @@
 # Form Recognizer & Custom Vision Project
 
-## Table of contents
+## Table of contents // TO UPDATE
 
-- [Table of contents](#table-of-contents)
+- [Table of contents // TO UPDATE](#table-of-contents----to-update)
 - [Description of the project](#description-of-the-project)
 - [Presentation of the Azure Cognitives Services](#presentation-of-the-azure-cognitives-services)
   * [Form Recognizer](#form-recognizer)
   * [Custom Vision](#custom-vision)
-- [Logic Apps](#logic-apps)
+- [Tutorial](#tutorial)
   * [Use the template](#use-the-template)
+
 
 ## Description of the project
 
@@ -21,11 +22,14 @@ PDF file is not supported by Custom Vision, you must therefore modify them befor
 
 ### Form Recognizer
 
+[Click here more information about Form Recognizer](https://docs.microsoft.com/en-us/azure/cognitive-services/form-recognizer/)
+
 ### Custom Vision
 
+[Click here more information about Custom Vision](https://docs.microsoft.com/en-us/azure/cognitive-services/custom-vision-service/)
 
 
-## Logic Apps
+## Tutorial
 
 ### Use the template
 
