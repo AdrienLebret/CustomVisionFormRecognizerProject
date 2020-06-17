@@ -2,13 +2,19 @@
 
 ## Table of contents // TO UPDATE
 
-- [Table of contents // TO UPDATE](#table-of-contents----to-update)
-- [Description of the project](#description-of-the-project)
-- [Presentation of the Azure Cognitives Services](#presentation-of-the-azure-cognitives-services)
-  * [Form Recognizer](#form-recognizer)
-  * [Custom Vision](#custom-vision)
-- [Tutorial](#tutorial)
-  * [Use the template](#use-the-template)
+- [Form Recognizer & Custom Vision Project](#form-recognizer---custom-vision-project)
+  * [Table of contents // TO UPDATE](#table-of-contents----to-update)
+  * [Description of the project](#description-of-the-project)
+  * [Presentation of the Azure Cognitives Services](#presentation-of-the-azure-cognitives-services)
+    + [Form Recognizer](#form-recognizer)
+      - [What is Form Recognizer?](#what-is-form-recognizer-)
+      - [Using Form Recognizer in the project](#using-form-recognizer-in-the-project)
+    + [Custom Vision](#custom-vision)
+      - [What is Custom Vision?](#what-is-custom-vision-)
+      - [Using Custom Vision in the project](#using-custom-vision-in-the-project)
+  * [Edit and deploy the template with template deployment](#edit-and-deploy-the-template-with-template-deployment)
+  * [Any questions? Any comments?](#any-questions--any-comments-)
+
 
 
 ## Description of the project
@@ -22,11 +28,24 @@ PDF file is not supported by Custom Vision, you must therefore modify them befor
 
 ### Form Recognizer
 
-[Click here more information about Form Recognizer](https://docs.microsoft.com/en-us/azure/cognitive-services/form-recognizer/)
+#### What is Form Recognizer?
+
+[Click here more information about Custom Vision](https://docs.microsoft.com/en-us/azure/cognitive-services/custom-vision-service/)
+
+
+#### Using Form Recognizer in the project 
+
+
 
 ### Custom Vision
 
-[Click here more information about Custom Vision](https://docs.microsoft.com/en-us/azure/cognitive-services/custom-vision-service/)
+#### What is Custom Vision?
+
+[Click here more information about Form Recognizer](https://docs.microsoft.com/en-us/azure/cognitive-services/form-recognizer/)
+
+#### Using Custom Vision in the project
+
+
 
 
 ## Edit and deploy the template with template deployment
@@ -53,6 +72,8 @@ Azure requires that each Azure service has a unique name. The deployment could f
 6. Select **Load file**, and then follow the instructions to load ***template.json*** you downloaded in the last section.
 
 7. Change the name of **all the parameters**
+
+> This part is very important because at the moment all the names are being used by me.
 
 ```json
 "parameters": {
@@ -120,4 +141,4 @@ Azure requires that each Azure service has a unique name. The deployment could f
 
 ## Any questions? Any comments?
 
-One mail: adrienlebret@gmail.com
+Send me an e-mail: adrienlebret@gmail.com
