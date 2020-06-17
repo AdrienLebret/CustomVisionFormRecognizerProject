@@ -1,9 +1,9 @@
 # Form Recognizer & Custom Vision Project
 
-## Table of contents // TO UPDATE
+## Table of contents
 
 - [Form Recognizer & Custom Vision Project](#form-recognizer---custom-vision-project)
-  * [Table of contents // TO UPDATE](#table-of-contents----to-update)
+  * [Table of contents](#table-of-contents)
   * [Description of the project](#description-of-the-project)
   * [Presentation of the Azure Cognitives Services](#presentation-of-the-azure-cognitives-services)
     + [Form Recognizer](#form-recognizer)
@@ -15,6 +15,8 @@
   * [Edit and deploy the template with template deployment](#edit-and-deploy-the-template-with-template-deployment)
   * [Any questions? Any comments?](#any-questions--any-comments-)
 
+
+> Important information: this is my first template sharing project, thank you for your indulgence. I remain open to questions, remarks and comments. I'll take them into account by modifying my github.
 
 
 ## Description of the project
