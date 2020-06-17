@@ -47,3 +47,64 @@ Azure requires that each Azure service has a unique name. The deployment could f
 3. Select **Template deployment**.
 
 ![alt text](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/media/quickstart-create-templates-use-the-portal/azure-resource-manager-template-library.png "Template Deployment")
+
+4. Select **Create**.
+
+5. Select **Build your own template in the editor**.
+
+6. Select **Load file**, and then follow the instructions to load ***template.json*** you downloaded in the last section.
+
+7. Change the name of all the parameters
+
+```json
+"parameters": {
+        "connections_plumsail_name": {
+            "defaultValue": "plumsail",
+            "type": "String"
+        },
+        "connections_azureblob_name": {
+            "defaultValue": "azureblob",
+            "type": "String"
+        },
+        "workflows_alebrelogicapp_name": {
+            "defaultValue": "alebrelogicapp",
+            "type": "String"
+        },
+        "connections_formrecognizer_name": {
+            "defaultValue": "formrecognizer",
+            "type": "String"
+        },
+        "connections_formrecognizer_1_name": {
+            "defaultValue": "formrecognizer-1",
+            "type": "String"
+        },
+        "connections_formrecognizer_2_name": {
+            "defaultValue": "formrecognizer-2",
+            "type": "String"
+        },
+        "connections_formrecognizer_3_name": {
+            "defaultValue": "formrecognizer-3",
+            "type": "String"
+        },
+        "accounts_alebrecustomvision_name": {
+            "defaultValue": "alebrecustomvision",
+            "type": "String"
+        },
+        "connections_cognitiveservicescustomvision_name": {
+            "defaultValue": "cognitiveservicescustomvision",
+            "type": "String"
+        },
+        "accounts_alebreformrecognizer_name": {
+            "defaultValue": "alebreformrecognizer",
+            "type": "String"
+        },
+        "storageAccounts_alebrestorageaccountform_name": {
+            "defaultValue": "alebrestorageaccountform",
+            "type": "String"
+        },
+        "accounts_alebrecustomvision_Prediction_name": {
+            "defaultValue": "alebrecustomvision-Prediction",
+            "type": "String"
+        }
+    }
+```	
