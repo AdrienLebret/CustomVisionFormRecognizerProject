@@ -29,9 +29,7 @@ PDF file is not supported by Custom Vision, you must therefore modify them befor
 [Click here more information about Custom Vision](https://docs.microsoft.com/en-us/azure/cognitive-services/custom-vision-service/)
 
 
-## Edit and deploy the template
-
-### Use the template deployment
+## Edit and deploy the template with template deployment
 
 The Azure portal can be used to perform some basic template editing. In this quickstart, you use a portal tool called Template Deployment. Template Deployment is used in this tutorial so you can complete the whole tutorial using one interface - the Azure portal.
 
@@ -40,9 +38,9 @@ The Azure portal can be used to perform some basic template editing. In this qui
 Azure requires that each Azure service has a unique name. The deployment could fail if you entered a storage account name that already exists. To avoid this issue, you modify the template to use a template function call uniquestring() to generate a unique storage account name.
 
 
-1.From the Azure portal menu or from the **Home** page, select **Create a resource**.
+1. From the Azure portal menu or from the **Home** page, select **Create a resource**.
 
-2.In **Search the Marketplace**, type **template deployment**, and then press **ENTER**.
+2. In **Search the Marketplace**, type **template deployment**, and then press **ENTER**.
 
 3. Select **Template deployment**.
 
@@ -54,7 +52,7 @@ Azure requires that each Azure service has a unique name. The deployment could f
 
 6. Select **Load file**, and then follow the instructions to load ***template.json*** you downloaded in the last section.
 
-7. Change the name of all the parameters
+7. Change the name of **all the parameters**
 
 ```json
 "parameters": {
@@ -108,3 +106,18 @@ Azure requires that each Azure service has a unique name. The deployment could f
         }
     }
 ```	
+
+8. Select **Save**.
+
+9. Select **Purchase**.
+
+10. Select the bell icon (notifications) from the top of the screen to see the deployment status. You shall see **Deployment in progress**. Wait until the deployment is completed.
+
+![alt text](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/media/quickstart-create-templates-use-the-portal/azure-resource-manager-template-tutorial-portal-notification.png "Deployment succeeded")
+
+11. **Finish**
+
+
+## Any questions? Any comments?
+
+One mail: adrienlebret@gmail.com
