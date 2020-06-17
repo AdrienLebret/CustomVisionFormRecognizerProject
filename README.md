@@ -29,7 +29,11 @@ PDF file is not supported by Custom Vision, you must therefore modify them befor
 [Click here more information about Custom Vision](https://docs.microsoft.com/en-us/azure/cognitive-services/custom-vision-service/)
 
 
-## Tutorial
+## Edit and deploy the template
 
 ### Use the template
+
+The Azure portal can be used to perform some basic template editing. In this quickstart, you use a portal tool called Template Deployment. Template Deployment is used in this tutorial so you can complete the whole tutorial using one interface - the Azure portal.
+
+> Template Deployment provides an interface for testing simple templates. It is not recommended to use this feature in production. Instead, store your templates in an Azure storage account, or a source code repository like GitHub.
 
