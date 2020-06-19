@@ -2,7 +2,6 @@
 
 ## Table of contents
 
-- [Form Recognizer & Custom Vision Project](#form-recognizer---custom-vision-project)
   * [Table of contents](#table-of-contents)
   * [Description of the project](#description-of-the-project)
   * [Presentation of the Azure Cognitives Services](#presentation-of-the-azure-cognitives-services)
@@ -16,14 +15,16 @@
   * [Any questions? Any comments?](#any-questions--any-comments-)
 
 
-> Important information: this is my first template sharing project, thank you for your indulgence. I remain open to questions, remarks and comments. I'll take them into account by modifying my github.
+> Important information: this is my first template sharing project, thank you for your indulgence. I am open to questions, remarks and comments. I'll consider them. by modifying my github.
 
 
 ## Description of the project
 
-The main goal of this project on *Microsoft Azure* is to be able to **sort** PDF files using Custom Vision and then **extract** the desired information using Form Recognizer.
+The main goal of this project on *Microsoft Azure* is to be able to **sort** PDF files using Custom Vision and then **extract** the desired informations using Form Recognizer.
 
-PDF file is not supported by Custom Vision, you must therefore modify them beforehand by converting them to JPEG or PNG format. I recommend to create your own conversion function with Azure Function.
+Example: You want information from an invoice such as the invoice number, invoice amount etc... However, since there are several **types of invoices**, you have to create several Form Recognizer templates. To automate this process, you want a preliminary step to **sort** these invoices using Custom Vision.
+
+> PDF file is not supported by Custom Vision, you must therefore modify them beforehand by converting them to JPEG or PNG format. I recommend to create your own conversion function with Azure Function.
 
 
 ## Presentation of the Azure Cognitives Services
@@ -32,21 +33,24 @@ PDF file is not supported by Custom Vision, you must therefore modify them befor
 
 #### What is Form Recognizer?
 
-[Click here more information about Custom Vision](https://docs.microsoft.com/en-us/azure/cognitive-services/custom-vision-service/)
+Click [here](https://docs.microsoft.com/en-us/azure/cognitive-services/form-recognizer/) for more information about Form Recognizer
 
+> Important, at this moment, Form Recognizer is always in ***Public Preview***
 
 #### Using Form Recognizer in the project 
 
+[Here](https://docs.microsoft.com/en-us/azure/cognitive-services/form-recognizer/quickstarts/label-tool) the tutorial that I used to create different models of Form Recognizer for the different type of files that you want to extract some information: 
 
 
 ### Custom Vision
 
 #### What is Custom Vision?
 
-[Click here more information about Form Recognizer](https://docs.microsoft.com/en-us/azure/cognitive-services/form-recognizer/)
+Click [here](https://docs.microsoft.com/en-us/azure/cognitive-services/custom-vision-service/) for more information about Custom Vision
 
 #### Using Custom Vision in the project
 
+Cet outil est utilisé dans le but 
 
 
 
