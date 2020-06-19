@@ -13,7 +13,7 @@
       - [Using Custom Vision in the project](#using-custom-vision-in-the-project)
   * [Edit and deploy the template with template deployment](#edit-and-deploy-the-template-with-template-deployment)
   * [Any questions? Any comments?](#any-questions--any-comments-)
-
+ 
 
 > Important information: this is my first template sharing project, thank you for your indulgence. I am open to questions, remarks and comments. I'll consider them. by modifying my github.
 
