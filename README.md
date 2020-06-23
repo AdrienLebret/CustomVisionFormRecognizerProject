@@ -20,12 +20,13 @@
 
 ## Description of the project
 
-The main goal of this project on *Microsoft Azure* is to be able to **sort** PDF files using Custom Vision and then **extract** the desired informations using Form Recognizer.
+The main goal of this project on *Microsoft Azure* is to be able to **sort** PDF files using [Custom Vision](#custom-vision) and then **extract** the desired informations using [Form Recognizer](#form-recognizer).
 
 Example: You want information from an invoice such as the invoice number, invoice amount etc... However, since there are several **types of invoices**, you have to create several Form Recognizer templates. To automate this process, you want a preliminary step to **sort** these invoices using Custom Vision.
 
-> PDF file is not supported by Custom Vision, you must therefore modify them beforehand by converting them to JPEG or PNG format. I recommend to create your own conversion function with Azure Function.
+> PDF file is not supported by Custom Vision, you must therefore modify them beforehand by converting them to JPEG or PNG format. I recommend to create your own conversion function with [Azure Function](#azure-function).
 
+To link these 2 Cognitive Services, I used the **Logic Apps** tool that allows me to automate this process. It is this template that you will use in the chapter [Edit and deploy the template with template deployment](#edit-and-deploy-the-template-with-template-deployment).
 
 ## Presentation of the Azure Cognitives Services
 
@@ -39,7 +40,9 @@ Click [here](https://docs.microsoft.com/en-us/azure/cognitive-services/form-reco
 
 #### Using Form Recognizer in the project 
 
-[Here](https://docs.microsoft.com/en-us/azure/cognitive-services/form-recognizer/quickstarts/label-tool) the tutorial that I used to create different models of Form Recognizer for the different type of files that you want to extract some information: 
+[Here](https://docs.microsoft.com/en-us/azure/cognitive-services/form-recognizer/quickstarts/label-tool) the tutorial that I used to create different models of Form Recognizer for the different type of files that you want to extract some information.
+Indeed, it is important to clearly differentiate between the different types of files (e.g. invoices) so that the Cognitifi Service can extract information in the best possible way.
+So, the important step when adding a new file is to sort your files with another Cognitive Service: Custom Vision
 
 
 ### Custom Vision
@@ -50,11 +53,17 @@ Click [here](https://docs.microsoft.com/en-us/azure/cognitive-services/custom-vi
 
 #### Using Custom Vision in the project
 
-Cet outil est utilisé dans le but 
+This tool is used to sort your files before using Form Recognizer.
 
+
+## Azure Function
+
+*The Azure Function to help you to convert your PDF file to JPEG is coming soon*
 
 
 ## Edit and deploy the template with template deployment
+
+We talked about Azure Function (to convert your files), Custom Vision (to sort your files) and Form Recognizer (to analyze your files). To use automate all this services, I used the Logic Apps tool and I put everything in this template that I will explain how to install on the Azure Portal.
 
 The Azure portal can be used to perform some basic template editing. In this quickstart, you use a portal tool called Template Deployment. Template Deployment is used in this tutorial so you can complete the whole tutorial using one interface - the Azure portal.
 
