@@ -90,7 +90,7 @@ Azure requires that each Azure service has a unique name. The deployment could f
 
 7. Change the name of **all the parameters**
 
-> This part is very important because at the moment all the names are being used by me.
+> This part is very important because at this moment all the parameters names are alredy used by me. So you will have to update the name below.
 
 ```json
 "parameters": {
