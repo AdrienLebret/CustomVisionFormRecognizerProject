@@ -4,7 +4,7 @@
 
 ## Table of contents
 
-	* [Table of contents](#table-of-contents)
+  * [Table of contents](#table-of-contents)
   * [Description of the project](#description-of-the-project)
   * [Presentation of the Azure Cognitives Services](#presentation-of-the-azure-cognitives-services)
     + [Form Recognizer](#form-recognizer)
