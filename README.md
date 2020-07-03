@@ -2,7 +2,7 @@
 
 ## Table of contents
 
-  * [Table of contents](#table-of-contents)
+	* [Table of contents](#table-of-contents)
   * [Description of the project](#description-of-the-project)
   * [Presentation of the Azure Cognitives Services](#presentation-of-the-azure-cognitives-services)
     + [Form Recognizer](#form-recognizer)
@@ -12,12 +12,12 @@
       - [What is Custom Vision?](#what-is-custom-vision-)
       - [Using Custom Vision in the project](#using-custom-vision-in-the-project)
   * [Azure Function](#azure-function)
-  * [Edit and deploy the template with template deployment](#edit-and-deploy-the-template-with-template-deployment)
+  * [Edit and deploy the template with template deployment in less than 15 min](#edit-and-deploy-the-template-with-template-deployment-in-less-than-15-min)
   * [Any questions? Any comments?](#any-questions--any-comments-)
 
  
 
-> Important information: this is my first template sharing project, thank you for your indulgence. I am open to questions, remarks and comments. I'll consider them. by modifying my github.
+> Important information: this is my first template sharing project, thank you for your indulgence. I am open to questions, remarks and comments. I'll consider them by modifying my github.
 
 
 ## Description of the project
@@ -29,6 +29,8 @@ Example: You want information from an invoice such as the invoice number, invoic
 > PDF file is not supported by Custom Vision, you must therefore modify them beforehand by converting them to JPEG or PNG format. I recommend to create your own conversion function with [Azure Function](#azure-function).
 
 To link these 2 Cognitive Services, I used the **Logic Apps** tool that allows me to automate this process. It is this template that you will use in the chapter [Edit and deploy the template with template deployment](#edit-and-deploy-the-template-with-template-deployment).
+
+
 
 ## Presentation of the Azure Cognitives Services
 
@@ -58,12 +60,15 @@ Click [here](https://docs.microsoft.com/en-us/azure/cognitive-services/custom-vi
 This tool is used to sort your files before using Form Recognizer.
 
 
+
 ## Azure Function
 
 *The Azure Function to help you to convert your PDF file to JPEG is coming soon*
 
 
-## Edit and deploy the template with template deployment
+
+
+## Edit and deploy the template with template deployment in less than 15 min
 
 We talked about Azure Function (to convert your files), Custom Vision (to sort your files) and Form Recognizer (to analyze your files). To use automate all this services, I used the Logic Apps tool and I put everything in this template that I will explain how to install on the Azure Portal.
 
