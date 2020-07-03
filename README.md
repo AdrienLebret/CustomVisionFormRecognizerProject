@@ -1,3 +1,6 @@
+![alt text](https://drive.google.com/file/d/1ZJCIj79CEytxW9bWWERO6Xo3ZATwrTb4/view?usp=sharing "Project banner")
+
+
 # Form Recognizer & Custom Vision Project
 
 ## Table of contents
