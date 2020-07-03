@@ -76,7 +76,7 @@
             },
             "kind": "CustomVision.Prediction",
             "properties": {
-                "customSubDomainName": "alebrecustomvision-prediction"
+                "customSubDomainName": "[parameters('accounts_alebrecustomvision_Prediction_name')]"
             }
         },
         {
