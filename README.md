@@ -1,5 +1,4 @@
-![alt text](https://drive.google.com/file/d/1ZJCIj79CEytxW9bWWERO6Xo3ZATwrTb4/view?usp=sharing "Project banner")
-
+![FR_CV_Bannière](https://user-images.githubusercontent.com/39364576/86483109-9fd9ae80-bd53-11ea-9429-a9611740324a.jpg)
 
 # Form Recognizer & Custom Vision Project
 
